@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>留言板</title>
+</head>
+<body>
+    <h1>留言板</h1>
+    <div>
+            <?php
+           if(!session('user.userId'))
+           {
+           ?>
+               <a href="/message/public/index/loan">登录</a>
+                <a href="/message/public/index/regist">注册</a>
+        <?php
+             }
+             else
+            {
+            ?>
+            欢迎您！{$_SESSION['username']}
+            <a href="/message/public/index/index/post"><strong>发表留言</strong></a>
+            <a href="/message/public/index/loan/logout">退出登录</a>
+                <?php
+              }
+             ?>
+        <div>
+        <ul>
+            {volist name='list' id='message'}
+            <div>
+             留言内容：{$message.content}
+             留言时间：{:date('Y-m-d',$message['createdAt'])}
+            <eq name="Think.session.user.userId" value="$message.userId">
+                <a href="delete/id/{$message['messageId']}" onclick="return confirm('确定删除此条留言?')">删除</a>
+            </eq>
+            </div>
+            {/volist}
+        </ul>
+        <p>{$page}</p>
+         </div>
+    </div>
+
+
+
+</body>
+</html>
